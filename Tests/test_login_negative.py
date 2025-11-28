@@ -10,7 +10,7 @@ from Pages.Login.Login_Props import TestData
 
 @pytest.mark.usefixtures("setup")
 class TestLoginNegative(BaseTest):
-    def test_login_invalidPassword(self):
+    def test_login_invalid_password(self):
         self.open_url(TestData.BASE_URL)
         driver = self.driver
         login_page = LoginPage(driver)

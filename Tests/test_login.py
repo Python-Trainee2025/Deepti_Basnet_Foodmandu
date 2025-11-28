@@ -5,8 +5,6 @@ from Tests.base_test import BaseTest
 from Pages.Login.Login_Props import TestData
 
 
-
-
 @pytest.mark.usefixtures("setup")
 class TestFoodManduLoginPage(BaseTest):
     def test_login_with_valid_credentials(self):
