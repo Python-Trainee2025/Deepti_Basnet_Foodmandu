@@ -2,7 +2,7 @@ import pytest
 from Pages.Product.Product_Props import ProductData
 from Pages.Product.Product_pages import ProductPage
 # from Pages.Cart.Cart_Page import CartPage
-from Tests.base_test import BaseTest
+from setup.base_test import BaseTest
 
 
 @pytest.mark.usefixtures("setup")

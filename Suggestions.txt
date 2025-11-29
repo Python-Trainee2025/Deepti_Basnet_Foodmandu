@@ -1,0 +1,20 @@
+-If you want more simplicity, Either use conftest or basetest. but it's fine to use the conftest to set up the methods for screenshots
+-easier to setup a basetest with everything you need and then inherit it rather than setting up conftest with the fixtures,
+if comfortable with it then only use conftest
+- when cloned into my system, tests couldn't be run without me refactoring the conftest to be in the test file, once I did that, the screenshots are also showing up in the required folder
+- I would suggest restructuring it to be the same with just a few changes:
+    -Main folder(Deepti_Basnet_Foodmandu)
+        -Pages
+            -Home
+            -Login
+            -etc
+        -Tests
+            -screenshot
+            -reports
+            -test1
+            -test2
+        -Setup
+            -basetest
+        conftest.py
+        pytest.ini
+

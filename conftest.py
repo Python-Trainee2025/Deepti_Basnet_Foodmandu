@@ -1,28 +1,32 @@
+import os
+import base64
+import logging
 import pytest
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
 
-@pytest.fixture(scope="class")
-def setup(request):                                                 #creates browsers and prepares config
-    chrome_options = Options()                                      #set up how chrome should launch
-    chrome_options.add_argument('--start-maximized')
-    chrome_options.add_argument('--disable-extensions')
-    chrome_options.add_argument('--disable-popup-blocking')
-    chrome_options.add_argument('--disable-infobars')
-    chrome_options.add_argument('--guest')
+logger = logging.getLogger(__name__)
 
-    prefs = {
-        "credentials_enable_service": False,
-        "profile.password_manager_enabled": False,
-        "profile.password_manager_leak_detection_enabled": False
-    }
-    chrome_options.add_experimental_option("prefs", prefs)
-    # Create the browser
-    driver = webdriver.Chrome(options=chrome_options)
-    # Attach driver to class so tests can use self.driver
+@pytest.hookimpl(hookwrapper=True)
+def pytest_runtest_makereport(item, call):
+    pytest_html = item.config.pluginmanager.getplugin("html")
+    outcome = yield
+    report = outcome.get_result()
+    extras = getattr(report, "extras", [])
 
-    request.cls.driver = driver
-    # Give the driver to the tests
-    yield driver
-    # Close the browser when all tests in the class are done
-    driver.quit()
+    if report.when == "call":
+        xfail = hasattr(report, "wasxfail")
+        if (report.skipped and xfail) or (report.failed and not xfail):
+            try:
+                if hasattr(item.instance, "screenshots"):
+                    for shot in item.instance.screenshots:
+                        screenshot_path = os.path.join("screenshots", shot)
+                        if os.path.exists(screenshot_path):
+                            with open(screenshot_path, "rb") as image_file:
+                                encoded = base64.b64encode(image_file.read()).decode("utf-8")
+                                extras.append(pytest_html.extras.image(
+                                    f"data:image/png;base64,{encoded}",
+                                    mime_type="image/png",
+                                    extension="png"
+                                ))
+            except Exception as e:
+                logger.error(f"Exception adding screenshot to report: {e}")
+        report.extras = extras

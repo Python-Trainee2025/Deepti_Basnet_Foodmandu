@@ -1,7 +1,7 @@
 import pytest
 from Pages.Home.Home_props import FoodSearch
 from Pages.Home.Home_page import HomePage
-from Tests.base_test import BaseTest
+from setup.base_test import BaseTest
 
 @pytest.mark.usefixtures("setup")
 class TestHomePage(BaseTest):

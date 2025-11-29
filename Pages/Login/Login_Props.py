@@ -1,8 +1,14 @@
-class TestData:
-    BASE_URL = "https://foodmandu.com/"
+from Pages.Login.Login_Locators import LoginLocators
 
-    EMAIL = "finalprojectsamir@gmail.com"
-    PASSWORD = "1234567890"
 
-    Invalid_Email = "abc@gmail.com"
-    Invalid_Password = "3456789"
+class LoginProps(LoginLocators):
+
+
+    @property
+    def login(self):
+        return self.driver.find_element(*LoginLocators.LOGIN_FORM)
+
+
+    @property
+    def email(self):
+        return self.driver.find_element(*LoginLocators.EMAIL)

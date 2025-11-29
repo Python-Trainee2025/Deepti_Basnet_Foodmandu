@@ -1,11 +1,8 @@
 import time
-from asyncio import wait_for
 
 import  pytest
-import selenium
-from selenium.webdriver.common.by import By
 from Pages.Login.login_page import LoginPage
-from Tests.base_test import BaseTest
+from setup.base_test import BaseTest
 from Pages.Login.Login_Props import TestData
 
 @pytest.mark.usefixtures("setup")
