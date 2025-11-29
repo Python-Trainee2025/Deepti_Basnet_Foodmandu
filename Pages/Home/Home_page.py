@@ -45,3 +45,4 @@ class HomePage:
             raise AssertionError(" First product not clickable. Screenshot saved.")
 
 
+

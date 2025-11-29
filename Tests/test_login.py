@@ -1,14 +1,12 @@
-from _pytest.config import Config
 import pytest
 from Pages.Login.login_page import LoginPage
-from Tests.base_test import BaseTest
+from Setup.base_test import BaseTest
 from Pages.Login.Login_Props import TestData
 
 
 @pytest.mark.usefixtures("setup")
 class TestFoodManduLoginPage(BaseTest):
     def test_login_with_valid_credentials(self):
-        # Open website using BaseTest method
         self.open_url(TestData.BASE_URL)
 
         # Validate page title
@@ -25,5 +23,5 @@ class TestFoodManduLoginPage(BaseTest):
         # Take screenshot after login
         self.take_screenshot("login_success")
 
-        # Optional: Assert current URL after login
+        #  Assert current URL after login
         assert "foodmandu.com" in self.driver.current_url
